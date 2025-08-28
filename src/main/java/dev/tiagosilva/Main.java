@@ -1,17 +1,32 @@
 package dev.tiagosilva;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import dev.tiagosilva.model.AddressModel;
+import dev.tiagosilva.model.PaymentModel;
+import dev.tiagosilva.model.ProductModel;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+import dev.tiagosilva.model.UserModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
+    public static void main(String[] args) {
+//        ProductModel product = new ProductModel("Laptop", 1200.00F);
+//        UserModel user = new UserModel("tiagoluizrs", "123456", 1, null, null);
+//        AddressModel address = new AddressModel("123 Main St", 123, "aaa", "Bnnn", 1L);
+//        PaymentModel payment = new PaymentModel("Tiago Silva", "0000 0000 0000 0000", 12, 2030, 1234, 1L);
+        ProductModel product = new ProductModel();
+        try{
+            UserModel user = new UserModel();
+            user.find(1L);
+//            product.save();
+//            user.save();
+//            address.save();
+//            payment.save();
+        } catch (Exception e){
+            logger.error("Error saving product: " + e.getMessage());
         }
     }
 }
