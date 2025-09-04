@@ -1,19 +1,35 @@
 package dev.tiagosilva.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.lang.reflect.*;
 
+@Getter
+@Setter
 class Model<T extends Model<T>> {
     protected String csvFileName;
     protected Long id;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
+    protected List<String> excludedFields = new ArrayList<>();
 
     public Model(String csvFileName) {
         this.csvFileName = csvFileName;
+        excludedFields.add("csvFileName");
+        excludedFields.add("excludedFields");
+    }
+
+    public Model(String csvFileName, List<String> excludedFields) {
+        this.csvFileName = csvFileName;
+
+        this.excludedFields.add("csvFileName");
+        this.excludedFields.add("excludedFields");
+        this.excludedFields.addAll(excludedFields);
     }
 
     public String toCSV() {
@@ -23,16 +39,18 @@ class Model<T extends Model<T>> {
             List<String> values = new ArrayList<>();
 
             for(Field f : superFields) {
-                if(!f.getName().equals("csvFileName")){
+                if(!excludedFields.contains(f.getName())) {
                     f.setAccessible(true);
                     Object v = f.get(this);
                     values.add(v == null ? "" : v.toString());
                 }
             }
             for (Field f : fields) {
-                f.setAccessible(true);
-                Object v = f.get(this);
-                values.add(v == null ? "" : v.toString());
+                if(!excludedFields.contains(f.getName())){
+                    f.setAccessible(true);
+                    Object v = f.get(this);
+                    values.add(v == null ? "" : v.toString());
+                }
             }
 
             return String.join(",", values);
@@ -41,17 +59,19 @@ class Model<T extends Model<T>> {
         }
     }
 
-    public static <T extends Model<T>> String csvHeader(Class<T> clazz) {
+    public <T extends Model<T>> String csvHeader(Class<T> clazz) {
         Field[] superFields = clazz.getSuperclass().getDeclaredFields();
         Field[] fields = clazz.getDeclaredFields();
         List<String> names = new ArrayList<>();
         for (Field f : superFields) {
-            if(!f.getName().equals("csvFileName")) {
+            if(!excludedFields.contains(f.getName())){
                 names.add(f.getName());
             }
         }
         for (Field f : fields) {
-            names.add(f.getName());
+            if(!excludedFields.contains(f.getName())) {
+                names.add(f.getName());
+            }
         }
         return String.join(",", names);
     }
@@ -62,7 +82,7 @@ class Model<T extends Model<T>> {
             Class<?> clazz = this.getClass();
             List<Field> allFields = new ArrayList<>();
             for (Field f : clazz.getSuperclass().getDeclaredFields()) {
-                if (!f.getName().equals("csvFileName")) {
+                if (!excludedFields.contains(f.getName())) {
                     allFields.add(f);
                 }
             }
@@ -98,17 +118,6 @@ class Model<T extends Model<T>> {
             f.setAccessible(true);
             Object v = f.get(this);
             return v == null ? null : v.toString();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public Long getId() {
-        try {
-            Field f = this.getClass().getDeclaredField("id");
-            f.setAccessible(true);
-            Object v = f.get(this);
-            return v == null ? null : (Long) v;
         } catch (Exception e) {
             return null;
         }
@@ -198,7 +207,7 @@ class Model<T extends Model<T>> {
     }
 
     public T find(Long id) throws IOException {
-        return list().stream().filter(m -> m.getId().equals(id)).findFirst().orElse(null);
+        return list().stream().filter(m -> m.id.equals(id)).findFirst().orElse(null);
     }
 
     public T find(String field, String value) throws IOException {

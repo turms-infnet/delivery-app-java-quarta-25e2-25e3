@@ -20,25 +20,10 @@ public class UserModel extends Model {
     }
 
     public UserModel(String username, String password, int role) {
-        super("users.csv");
+        super("users.csv", List.of("address", "payment"));
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    @Override
-    public UserModel find(Long id) throws IOException {
-        UserModel user = (UserModel) super.find(id);
-        var user_id = user.getId();
-
-        AddressModel address = new AddressModel();
-        AddressModel resultAddress = (AddressModel) address.find("id_user", user_id.toString());
-        user.setAddress(resultAddress);
-
-        PaymentModel payment = new PaymentModel();
-        PaymentModel resultPayment = (PaymentModel) payment.find("id_user", user_id.toString());
-        user.setPayment(resultPayment);
-
-        return user;
-    }
 }
