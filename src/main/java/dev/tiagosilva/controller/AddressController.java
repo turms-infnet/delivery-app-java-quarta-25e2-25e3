@@ -1,4 +1,6 @@
 package dev.tiagosilva.controller;
 
-public class AddressController extends Controller{
+import dev.tiagosilva.dto.AddressDTO;
+
+public class AddressController extends Controller<AddressDTO>{
 }

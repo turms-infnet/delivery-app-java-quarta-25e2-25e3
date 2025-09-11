@@ -1,4 +1,6 @@
 package dev.tiagosilva.controller;
 
-public class UserController extends Controller{
+import dev.tiagosilva.dto.UserDTO;
+
+public class UserController extends Controller<UserDTO>{
 }

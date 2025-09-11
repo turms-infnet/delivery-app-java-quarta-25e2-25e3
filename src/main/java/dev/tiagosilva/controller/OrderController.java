@@ -1,4 +1,6 @@
 package dev.tiagosilva.controller;
 
-public class OrderController extends Controller{
+import dev.tiagosilva.dto.OrderDTO;
+
+public class OrderController extends Controller<OrderDTO>{
 }

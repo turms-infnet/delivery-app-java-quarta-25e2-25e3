@@ -1,11 +1,12 @@
 package dev.tiagosilva.dto;
 
+import dev.tiagosilva.controller.Controller;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AddressDTO {
+public class AddressDTO extends Controller<AddressDTO> {
     private Long id;
     private String street;
     private int number;

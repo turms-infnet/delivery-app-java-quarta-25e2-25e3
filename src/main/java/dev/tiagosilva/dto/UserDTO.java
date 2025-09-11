@@ -2,6 +2,7 @@ package dev.tiagosilva.dto;
 
 import dev.tiagosilva.model.AddressModel;
 import dev.tiagosilva.model.PaymentModel;
+import dev.tiagosilva.controller.Controller;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 @Setter
 @Getter
-public class UserDTO {
+public class UserDTO extends Controller<UserDTO>{
     private Long id;
     private String username;
     private String password;
@@ -25,6 +26,8 @@ public class UserDTO {
         this.getAddressLinked();
         this.getPaymentLinked();
     }
+
+    public UserDTO() {}
 
     private void getAddressLinked() throws IOException {
         AddressModel add = new AddressModel();

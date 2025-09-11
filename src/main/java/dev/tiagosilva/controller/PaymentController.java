@@ -1,4 +1,6 @@
 package dev.tiagosilva.controller;
 
-public class PaymentController extends Controller{
+import dev.tiagosilva.dto.PaymentDTO;
+
+public class PaymentController extends Controller<PaymentDTO>{
 }

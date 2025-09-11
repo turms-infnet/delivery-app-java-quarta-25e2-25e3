@@ -1,11 +1,12 @@
 package dev.tiagosilva.dto;
 
+import dev.tiagosilva.controller.Controller;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class ProductDTO {
+public class ProductDTO extends Controller<ProductDTO> {
     private Long id;
     private String name;
     private Float price;

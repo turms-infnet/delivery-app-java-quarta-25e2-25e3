@@ -1,11 +1,12 @@
 package dev.tiagosilva.dto;
 
+import dev.tiagosilva.controller.Controller;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class PaymentDTO {
+public class PaymentDTO extends Controller<PaymentDTO> {
     private Long id;
     private String name;
     private String number;
