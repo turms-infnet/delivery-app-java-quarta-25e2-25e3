@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddressDTO extends Controller<AddressDTO> {
+public class AddressResponseDTO {
     private Long id;
     private String street;
     private int number;

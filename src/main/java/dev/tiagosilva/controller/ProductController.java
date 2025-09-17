@@ -1,6 +1,8 @@
 package dev.tiagosilva.controller;
 
-import dev.tiagosilva.dto.ProductDTO;
+import dev.tiagosilva.dto.ProductResponseDTO;
 
-public class ProductController extends Controller<ProductDTO>{
+import java.util.List;
+
+public class ProductController{
 }

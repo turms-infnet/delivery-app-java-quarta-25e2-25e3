@@ -5,10 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
-public class OrderDTO extends Controller<OrderDTO> {
+public class OrderResponseDTO {
     private Long id;
     private LocalDateTime date;
     private Float total;

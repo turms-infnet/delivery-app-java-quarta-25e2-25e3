@@ -1,6 +1,9 @@
 package dev.tiagosilva.controller;
 
-import dev.tiagosilva.dto.OrderDTO;
+import dev.tiagosilva.dto.OrderRequestDTO;
+import dev.tiagosilva.dto.OrderResponseDTO;
 
-public class OrderController extends Controller<OrderDTO>{
+import java.util.List;
+
+public class OrderController{
 }

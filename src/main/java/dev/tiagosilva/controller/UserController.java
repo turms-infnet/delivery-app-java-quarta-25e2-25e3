@@ -1,6 +1,19 @@
 package dev.tiagosilva.controller;
 
-import dev.tiagosilva.dto.UserDTO;
+import dev.tiagosilva.business.AuthBusinessHandler;
+import dev.tiagosilva.dto.UserRequestDTO;
+import dev.tiagosilva.dto.UserResponseDTO;
 
-public class UserController extends Controller<UserDTO>{
+import java.util.List;
+
+public class UserController{
+    public AuthBusinessHandler authBusinessHandler = new AuthBusinessHandler();
+
+    public UserResponseDTO login(UserRequestDTO userRequestDTO) {
+        return authBusinessHandler.login(userRequestDTO);
+    }
+
+    public boolean register(UserRequestDTO userRequestDTO) {
+        return authBusinessHandler.register(userRequestDTO);
+    }
 }

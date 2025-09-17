@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserModel extends Model {
+public class UserModel extends Model<UserModel> {
     private String username;
     private String password;
     private int role;
@@ -16,7 +16,7 @@ public class UserModel extends Model {
     private PaymentModel payment;
 
     public UserModel() {
-        super("users.csv");
+        super("users.csv", List.of("address", "payment"));
     }
 
     public UserModel(String username, String password, int role) {

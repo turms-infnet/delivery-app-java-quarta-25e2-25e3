@@ -3,23 +3,13 @@ package dev.tiagosilva.controller;
 import java.util.List;
 
 public abstract class Controller<T extends Controller<T>> {
-    public List<T> get() {
-        return List.of();
-    }
+    abstract public List<T> get();
 
-    public T get(Long id) {
-        return null;
-    }
+    abstract public T get(Long id);
 
-    public T create(T obj) {
-        return null;
-    }
+    abstract public T create(T obj);
 
-    public T update(Long id, T obj) {
-        return null;
-    }
+    abstract public T update(Long id, T obj);
 
-    public boolean delete(Long id) {
-        return true;
-    }
+    abstract public boolean delete(Long id);
 }

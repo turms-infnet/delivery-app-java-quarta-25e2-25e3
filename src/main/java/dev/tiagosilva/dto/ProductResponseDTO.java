@@ -6,10 +6,13 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class PaymentDTO extends Controller<PaymentDTO> {
+public class ProductResponseDTO {
     private Long id;
     private String name;
-    private String number;
-    private int month;
-    private int year;
+    private Float price;
+
+    public ProductResponseDTO(String name, Float price) {
+        this.name = name;
+        this.price = price;
+    }
 }
