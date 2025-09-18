@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PaymentModel extends Model {
+public class PaymentModel extends Model<PaymentModel> {
     private String name;
     private String number;
     private int secret;

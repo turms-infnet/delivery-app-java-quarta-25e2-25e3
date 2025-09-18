@@ -16,4 +16,8 @@ public class UserController{
     public boolean register(UserRequestDTO userRequestDTO) {
         return authBusinessHandler.register(userRequestDTO);
     }
+
+    public UserResponseDTO get(Long id) {
+        return authBusinessHandler.get(id);
+    }
 }

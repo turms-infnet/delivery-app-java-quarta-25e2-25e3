@@ -12,15 +12,13 @@ public class UserModel extends Model<UserModel> {
     private String username;
     private String password;
     private int role;
-    private AddressModel address;
-    private PaymentModel payment;
 
     public UserModel() {
-        super("users.csv", List.of("address", "payment"));
+        super("users.csv");
     }
 
     public UserModel(String username, String password, int role) {
-        super("users.csv", List.of("address", "payment"));
+        super("users.csv");
         this.username = username;
         this.password = password;
         this.role = role;

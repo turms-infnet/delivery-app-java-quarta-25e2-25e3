@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductModel extends Model {
+public class ProductModel extends Model<ProductModel> {
     private String name;
     private Float price;
 

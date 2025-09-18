@@ -1,7 +1,9 @@
 package dev.tiagosilva.business;
 
+import dev.tiagosilva.dto.PaymentResponseDTO;
 import dev.tiagosilva.dto.UserRequestDTO;
 import dev.tiagosilva.dto.UserResponseDTO;
+import dev.tiagosilva.model.PaymentModel;
 import dev.tiagosilva.model.UserModel;
 
 public class AuthBusinessHandler{
@@ -42,5 +44,22 @@ public class AuthBusinessHandler{
         } catch (Exception e) {
             throw new RuntimeException("Erro ao buscar usuário", e);
         }
+    }
+
+    public UserResponseDTO get(Long id) {
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+
+        try {
+            userModel = new UserModel();
+            UserModel result = userModel.find(id);
+
+            if (result != null) {
+                userResponseDTO = UserResponseDTO.modelToDto(result);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return userResponseDTO;
     }
 }

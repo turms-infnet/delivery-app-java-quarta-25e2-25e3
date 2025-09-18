@@ -19,7 +19,16 @@ public class Main {
         var app = Javalin.create(config -> {
                     config.router.mount(router -> {})
                         .apiBuilder(() -> {
-
+                            path("user", () -> {
+                                        UserController ctrl = new UserController() {
+                                        };
+                                        path("{id}", () -> {
+                                            get(ctx -> {
+                                                UserResponseDTO userDTO = ctrl.get(Long.valueOf(ctx.pathParam("id")));
+                                                ctx.json(userDTO);
+                                            });
+                                        });
+                            });
                             path("auth", () -> {
                                 UserController ctrl = new UserController() {};
                                 path("login", () -> {
@@ -78,43 +87,38 @@ public class Main {
 //                                    });
 //                                });
 //                            });
-//                            path("product", () -> {
-//                                ProductController ctrl = new ProductController() {};
-//                                path("", () -> {
-//                                    get(ctx -> {
-//                                        List<ProductResponseDTO> productDTOList = ctrl.get();
-//                                        ctx.status(200);
-//                                        ctx.json(productDTOList);
-//                                    });
-//                                    post(ctx -> {
-//                                        ProductResponseDTO productDTO = ctrl.create(ctx.bodyAsClass(ProductResponseDTO.class));
-//                                        ctx.json(productDTO);
-//                                    });
-//                                });
-//                                path("{id}", () -> {
-//                                    get(ctx -> {
-//                                        ProductResponseDTO productDTO = ctrl.get(Long.valueOf(ctx.pathParam("id")));
-//                                        ctx.status(200);
-//                                        ctx.json(productDTO);
-//                                    });
-//                                    put(ctx -> {
-//                                        ProductResponseDTO productDTO = ctrl.update(Long.valueOf(ctx.pathParam("id")), ctx.bodyAsClass(ProductResponseDTO.class));
-//                                        ctx.status(200);
-//                                        ctx.json(productDTO);
-//                                    });
-//                                    delete(ctx -> {
-//                                        boolean result = ctrl.delete(Long.valueOf(ctx.pathParam("id")));
-//                                        if (result) {
-//                                            ctx.status(200);
-//                                            ctx.json("Ok");
-//                                        }
-//                                        else {
-//                                            ctx.status(400);
-//                                            ctx.json("Error");
-//                                        }
-//                                    });
-//                                });
-//                            });
+                            path("product", () -> {
+                                ProductController ctrl = new ProductController() {};
+                                path("", () -> {
+                                    get(ctx -> {
+                                        List<ProductResponseDTO> productDTOList = ctrl.get();
+                                        ctx.status(200);
+                                        ctx.json(productDTOList);
+                                    });
+                                    post(ctx -> {
+                                        boolean result = ctrl.create(ctx.bodyAsClass(ProductRequestDTO.class));
+                                        if (result) {
+                                            ctx.status(201);
+                                            ctx.json("Produto criado com sucesso");
+                                        } else {
+                                            ctx.status(400);
+                                            ctx.json("Produto já existe");
+                                        }
+                                    });
+                                });
+                                path("{id}", () -> {
+                                    get(ctx -> {
+                                        ProductResponseDTO productDTO = ctrl.get(Long.valueOf(ctx.pathParam("id")));
+                                        if (productDTO.getId() != null) {
+                                            ctx.status(200);
+                                            ctx.json(productDTO);
+                                        } else {
+                                            ctx.status(404);
+                                            ctx.json("Produto não encontrado");
+                                        }
+                                    });
+                                });
+                            });
 //                            path("order", () -> {
 //                                OrderController ctrl = new OrderController() {};
 //                                path("", () -> {
@@ -152,43 +156,35 @@ public class Main {
 //                                    });
 //                                });
 //                            });
-//                            path("payment", () -> {
-//                                PaymentController ctrl = new PaymentController() {};
-//                                path("", () -> {
-//                                    get(ctx -> {
-//                                        List<PaymentResponseDTO> paymentDTOList = ctrl.get();
-//                                        ctx.status(200);
-//                                        ctx.json(paymentDTOList);
-//                                    });
-//                                    post(ctx -> {
-//                                        PaymentResponseDTO paymentDTO = ctrl.create(ctx.bodyAsClass(PaymentResponseDTO.class));
-//                                        ctx.json(paymentDTO);
-//                                    });
-//                                });
-//                                path("{id}", () -> {
-//                                    get(ctx -> {
-//                                        PaymentResponseDTO paymentDTO = ctrl.get(Long.valueOf(ctx.pathParam("id")));
-//                                        ctx.status(200);
-//                                        ctx.json(paymentDTO);
-//                                    });
-//                                    put(ctx -> {
-//                                        PaymentResponseDTO paymentDTO = ctrl.update(Long.valueOf(ctx.pathParam("id")), ctx.bodyAsClass(PaymentResponseDTO.class));
-//                                        ctx.status(200);
-//                                        ctx.json(paymentDTO);
-//                                    });
-//                                    delete(ctx -> {
-//                                        boolean result = ctrl.delete(Long.valueOf(ctx.pathParam("id")));
-//                                        if (result) {
-//                                            ctx.status(200);
-//                                            ctx.json("Ok");
-//                                        }
-//                                        else {
-//                                            ctx.status(400);
-//                                            ctx.json("Error");
-//                                        }
-//                                    });
-//                                });
-//                            });
+                            path("payment", () -> {
+                                PaymentController ctrl = new PaymentController() {};
+                                path("", () -> {
+                                    post(ctx -> {
+                                        boolean result = ctrl.create(ctx.bodyAsClass(PaymentRequestDTO.class));
+                                        if (result) {
+                                            ctx.status(201);
+                                            ctx.json("Pagamento criado com sucesso");
+                                        } else {
+                                            ctx.status(400);
+                                            ctx.json("Pagamento já existe");
+                                        }
+                                    });
+                                });
+                                path("{id}", () -> {
+                                    get(ctx -> {
+                                        PaymentResponseDTO paymentDTO = ctrl.get(Long.valueOf(ctx.pathParam("id")));
+                                        ctx.status(200);
+                                        ctx.json(paymentDTO);
+                                    });
+                                });
+                                path("user/{user_id}", () -> {
+                                    get(ctx -> {
+                                        List<PaymentResponseDTO> paymentsDTO = ctrl.getByUser(Long.valueOf(ctx.pathParam("user_id")));
+                                        ctx.status(200);
+                                        ctx.json(paymentsDTO);
+                                    });
+                                });
+                            });
 //                            path("report", () -> {});
                         });
                 })
